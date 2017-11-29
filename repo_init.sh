@@ -9,7 +9,7 @@ then
 fi
 
 AOSP_WORKSPACE=$1
-AOSP_TAG="android-8.0.0_r15"
+AOSP_TAG="android-8.0.0_r30"
 LOCAL_MANIFESTS_BRANCH="master"
 
 # Initialize the AOSP tree
