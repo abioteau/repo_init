@@ -14,7 +14,7 @@ REPO_MIRROR_URL=$3
 GITHUB_MIRROR_URL=$4
 GIT_BRANCH=$5
 
-AOSP_TAG="android-8.0.0_r30"
+AOSP_TAG="android-8.1.0_r2"
 LOCAL_MANIFESTS_BRANCH="master"
 
 # Initialize the AOSP tree
