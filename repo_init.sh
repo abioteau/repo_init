@@ -1,5 +1,13 @@
 #!/bin/bash
 
+pushd () {
+    command pushd "$@" > /dev/null
+}
+
+popd () {
+    command popd "$@" > /dev/null
+}
+
 NB_CORES=`cat /proc/cpuinfo | grep processor | wc -l`
 
 if [ $# -ne 5 ]
@@ -19,15 +27,14 @@ LOCAL_MANIFESTS_BRANCH="n-mr1_3.10"
 
 # Initialize the AOSP tree
 mkdir -p $AOSP_WORKSPACE
-cd $AOSP_WORKSPACE
+pushd $AOSP_WORKSPACE
 ~/bin/repo init -u $AOSP_MIRROR_URL/platform/manifest.git --repo-url $REPO_MIRROR_URL/git-repo.git -b $AOSP_TAG
 
 # Add local_manifests
-cd .repo
-git clone $GITHUB_MIRROR_URL/abioteau/local_manifests
-cd local_manifests
+git clone $GITHUB_MIRROR_URL/abioteau/local_manifests .repo/local_manifests
+pushd $AOSP_WORKSPACE/.repo/local_manifests
 git checkout $LOCAL_MANIFESTS_BRANCH
-cd ../..
+popd
 
 # Download source code
 ~/bin/repo sync -j $NB_CORES
@@ -36,3 +43,5 @@ cd ../..
 ~/bin/repo start $GIT_BRANCH --all
 ./repo_update.sh
 ~/bin/repo prune
+
+popd
